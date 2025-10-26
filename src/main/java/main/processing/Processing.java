@@ -8,7 +8,7 @@ import fileio.SimulationInput;
 import fileio.CommandInput;
 import fileio.TerritorySectionParamsInput;
 import java.util.ArrayList;
-import main.entities.Entities
+import main.entities.Entities;
 
 public class Processing {
     private static final ObjectMapper MAPPER = new ObjectMapper();
