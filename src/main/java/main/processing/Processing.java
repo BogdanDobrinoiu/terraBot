@@ -9,6 +9,7 @@ import fileio.CommandInput;
 import fileio.TerritorySectionParamsInput;
 import java.util.ArrayList;
 import main.entities.Entities;
+import main.entities.Cell;
 
 public class Processing {
     private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -30,7 +31,8 @@ public class Processing {
                 String[] parts = sim.territoryDim.split("x");
                 int n = Integer.parseInt(parts[1]);
                 int m = Integer.parseInt(parts[2]);
-                Entities[][] territory = new Entities[n][m];
+                Cell[][] territory = new Cell[n][m];
+
 
             } else if(command.command.equals("endSimulation")) {
                 commandNode.put("message", "Simulation has ended.");
