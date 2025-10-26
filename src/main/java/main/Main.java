@@ -8,6 +8,8 @@ import fileio.InputLoader;
 import java.io.File;
 import java.io.IOException;
 
+import main.processing.Processing;
+
 /**
  * The entry point to this homework. It runs the checker that tests your implementation.
  */
@@ -24,25 +26,10 @@ public class Main {
                               final String outputPath) throws IOException {
 
         InputLoader inputLoader = new InputLoader(inputPath);
-        ArrayNode output = MAPPER.createArrayNode();
 
-        /*
-         * TODO Implement your function here
-         *
-         * How to add output to the output array?
-         * There are multiple ways to do this, here is one example:
-         *
-         *
-         * ObjectNode objectNode = MAPPER.createObjectNode();
-         * objectNode.put("field_name", "field_value");
-         *
-         * ArrayNode arrayNode = MAPPER.createArrayNode();
-         * arrayNode.add(objectNode);
-         *
-         * output.add(arrayNode);
-         * output.add(objectNode);
-         *
-         */
+        Processing processor = new Processing();
+
+        ArrayNode output = processor.run(inputLoader);
 
         File outputFile = new File(outputPath);
         outputFile.getParentFile().mkdirs();
