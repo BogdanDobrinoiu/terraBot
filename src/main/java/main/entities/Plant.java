@@ -1,22 +1,32 @@
 package main.entities;
 
+import lombok.Getter;
+import lombok.Setter;
 import main.entities.flowerTypes.*;
 
 public class Plant extends Entities {
-    protected double O2; // oxygen level at start
-    protected String age; // young, mature, old, dead
+    @Getter
+    @Setter
+    private double O2;
+
+    @Getter
+    @Setter
+    private String age;
+
+    @Getter
     private static final double young = 0.2;
+    @Getter
     private static double mature = 0.5;
+    @Getter
     private static final double old = -0.3;
-    protected double oxygenLevel;
+
+    @Getter
+    @Setter
+    private double oxygenLevel;
+
+    @Getter
+    @Setter
     protected int probability;
-
-    public double getYoung() { return young; }
-    public double getMature() { return mature; }
-    public double getOld() { return old; }
-
-    public double getOxygenLevel() { return oxygenLevel; }
-    public void setOxygenLevel(double oxygenLevel) { this.oxygenLevel = oxygenLevel; }
 
     public Plant(double O2, String age, int  probability) {
         this.O2 = O2;
