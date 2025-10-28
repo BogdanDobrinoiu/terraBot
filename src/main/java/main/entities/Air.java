@@ -10,6 +10,8 @@ public abstract class Air extends Entities {
     private double temperature;
     private double oxygenLevel;
     private double airQuality;
+    private double toxicityRate;
 
     public abstract void calculateQuality();
+    public abstract void calculateToxicityRate();
 }

@@ -14,4 +14,10 @@ public abstract class Temperat extends Air {
         this.setAirQuality(this.getOxygenLevel() * 2 + this.getHumidity() * 0.7 - pollenLevel * 0.1);
         this.setAirQuality(normalizeScore(this.getAirQuality()));
     }
+
+    @Override
+    public void calculateToxicityRate() {
+        double toxicityAQ = 100 * (1 - this.getAirQuality() / 84);
+        this.setToxicityRate(Math.round(toxicityAQ * 100.0) / 100.0);
+    }
 }
