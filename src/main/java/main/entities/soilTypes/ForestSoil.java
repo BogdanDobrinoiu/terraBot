@@ -12,5 +12,6 @@ public class ForestSoil extends Soil {
     @Override
     public void computeSoilQuality() {
         setSoilQuality(this.getNitrogen() * 1.2 + this.getOrganicMatter() * 2 + this.getWaterRetention() * 1.5 + leafLitter * 0.3);
+        this.setSoilQuality(normalizeScore(this.getSoilQuality()));
     }
 }

@@ -12,5 +12,6 @@ public abstract class SwampSoil extends Soil {
     @Override
     public void computeSoilQuality() {
         setSoilQuality(this.getNitrogen() * 1.1 + this.getOrganicMatter() * 2.2 + waterLogging * 5);
+        this.setSoilQuality(normalizeScore(this.getSoilQuality()));
     }
 }

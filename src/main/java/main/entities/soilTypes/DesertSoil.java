@@ -12,5 +12,6 @@ public abstract class DesertSoil extends Soil {
     @Override
     public void computeSoilQuality() {
         setSoilQuality(this.getNitrogen() * 0.5  + this.getWaterRetention() * 0.3 + salinity * 2);
+        this.setSoilQuality(normalizeScore(this.getSoilQuality()));
     }
 }
