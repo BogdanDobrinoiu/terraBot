@@ -6,7 +6,7 @@ import main.entities.Soil;
 
 @Getter
 @Setter
-public abstract class DesertSoil extends Soil {
+public class DesertSoil extends Soil {
     private double salinity;
 
     @Override

@@ -6,7 +6,7 @@ import main.entities.Air;
 
 @Getter
 @Setter
-public abstract class Desert extends Air {
+public class Desert extends Air {
     private double dustParticles;
 
     @Override

@@ -6,7 +6,7 @@ import main.entities.Soil;
 
 @Getter
 @Setter
-public abstract class GrasslandSoil extends Soil {
+public class GrasslandSoil extends Soil {
     private double rootDensity;
 
     @Override

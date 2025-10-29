@@ -6,7 +6,7 @@ import main.entities.Air;
 
 @Getter
 @Setter
-public abstract class Temperat extends Air {
+public class Temperat extends Air {
     private double pollenLevel;
 
     @Override

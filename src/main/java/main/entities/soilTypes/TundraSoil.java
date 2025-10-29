@@ -6,7 +6,7 @@ import main.entities.Soil;
 
 @Getter
 @Setter
-public abstract class TundraSoil extends Soil {
+public class TundraSoil extends Soil {
     private double permafrostDepth;
 
     @Override
