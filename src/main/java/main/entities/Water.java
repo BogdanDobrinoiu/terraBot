@@ -1,5 +1,11 @@
 package main.entities;
 
+import fileio.WaterInput;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Water {
     private double salinity;
     private double pH;
@@ -7,6 +13,9 @@ public class Water {
     private int turbidity;
     private double contaminantIndex;
     private boolean isFrozen;
+    private String name;
+    private String type;
+    private double mass;
 
     public void setWater(double salinity, double pH, double purity, int turbidity, double contaminantIndex, boolean isFrozen) {
         this.salinity = salinity;
@@ -27,5 +36,21 @@ public class Water {
 
         return (0.3 * purity_score + 0.2 * pH_score + 0.15 * salinity_score +
                 0.1 * turbidity_score + 0.15 *  contaminant_score + 0.2 * frozen_score) * 100;
+    }
+
+    public static Water createWater(WaterInput waterInput) {
+        Water w = new Water();
+
+        w.setType(waterInput.type);
+        w.setName(waterInput.name);
+        w.setPurity(waterInput.purity);
+        w.setSalinity(waterInput.salinity);
+        w.setTurbidity(waterInput.turbidity);
+        w.setContaminantIndex(waterInput.contaminantIndex);
+        w.setFrozen(waterInput.isFrozen);
+        w.setPH(waterInput.pH);
+        w.setMass(waterInput.mass);
+
+        return w;
     }
 }

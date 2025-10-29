@@ -1,5 +1,6 @@
 package main.entities;
 
+import fileio.PlantInput;
 import lombok.Getter;
 import lombok.Setter;
 import main.entities.flowerTypes.*;
@@ -9,15 +10,14 @@ import main.entities.flowerTypes.*;
 public class Plant extends Entities {
     private double O2;
     private String age;
-
-    @Getter
-    private static final double young = 0.2;
-    @Getter
-    private static final double mature = 0.5;
-    @Getter
-    private static final double old = -0.3;
+    private final double young = 0.2;
+    private final double mature = 0.5;
+    private final double old = -0.3;
     private double oxygenLevel;
     protected int probability;
+    private double mass;
+    private String name;
+    private String type;
 
     public Plant(double O2, String age, int  probability) {
         this.O2 = O2;
@@ -31,5 +31,24 @@ public class Plant extends Entities {
             case "mature" -> this.oxygenLevel += this.O2 + this.getMature();
             case "old" -> this.oxygenLevel += this.O2 + this.getOld();
         }
+    }
+
+    public static Plant createPlant(PlantInput plantInput) {
+        Plant p;
+
+        switch (plantInput.type) {
+            case "FloweringPlants" -> p = new FloweringPlants();
+            case "Ferns" ->  p = new Ferns();
+            case "Algae" ->  p = new Algae();
+            case "Mosses" ->  p = new Mosses();
+            case "Gymnosperms" ->  p = new Gymnosperms();
+            default -> p =  null;
+        }
+
+        p.setType(plantInput.type);
+        p.setName(plantInput.name);
+        p.setMass(plantInput.mass);
+
+        return p;
     }
 }
