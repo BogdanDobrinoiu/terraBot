@@ -1,5 +1,7 @@
 package main.entities.airTypes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 import main.entities.Air;
@@ -10,14 +12,21 @@ public class Polar extends Air {
     private double iceCrystalConcentration;
 
     @Override
-    public void calculateQuality() {
-        this.setAirQuality(this.getOxygenLevel() * 2 + (100 - Math.abs(this.getTemperature())) - (iceCrystalConcentration * 0.05));
-        this.setAirQuality(normalizeScore(this.getAirQuality()));
+    public double calculateQuality() {
+        double airQuality = getOxygenLevel() * 2 + (100 - Math.abs(getTemperature())) - (iceCrystalConcentration * 0.05);
+        return normalizeScore(airQuality);
     }
 
     @Override
     public void calculateToxicityRate() {
         double toxicityAQ = 100 * (1 - this.getAirQuality() / 142);
         this.setToxicityRate(Math.round(toxicityAQ * 100.0) / 100.0);
+    }
+
+    @Override
+    public ObjectNode toJson(ObjectMapper mapper) {
+        ObjectNode node = super.toJson(mapper);
+        node.put("iceCrystalConcentration", iceCrystalConcentration);
+        return node;
     }
 }

@@ -1,5 +1,7 @@
 package main.entities;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.AnimalInput;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +35,14 @@ public class Animal extends Entities {
         a.setMass(animalInput.mass);
 
         return a;
+    }
+
+    public ObjectNode toJson(ObjectMapper mapper) {
+        ObjectNode node = mapper.createObjectNode();
+        node.put("type", type);
+        node.put("name", name);
+        node.put("mass", mass);
+        return node;
     }
 }
 

@@ -12,12 +12,12 @@ import main.entities.soilTypes.*;
 public class Processing {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    public Cell[][] generateMap(SimulationInput sim) {
+    private Cell[][] generateMap(SimulationInput sim) {
         TerritorySectionParamsInput params = sim.territorySectionParams;
 
         String[] parts = sim.territoryDim.split("x");
-        int n = Integer.parseInt(parts[1]);
-        int m = Integer.parseInt(parts[2]);
+        int n = Integer.parseInt(parts[0]);
+        int m = Integer.parseInt(parts[1]);
         Cell[][] territory = new Cell[n][m];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
@@ -78,6 +78,32 @@ public class Processing {
         return territory;
     }
 
+    private ObjectNode printEnvConditions(Cell cell) {
+        ObjectNode output = MAPPER.createObjectNode();
+
+        if (cell.getSoil() != null) {
+            output.set("soil", cell.getSoil().toJson(MAPPER));
+        }
+        if (cell.getPlant() != null) {
+            output.set("plant", cell.getPlant().toJson(MAPPER));
+        }
+        if (cell.getAnimal() != null) {
+            output.set("animal", cell.getAnimal().toJson(MAPPER));
+        }
+        if (cell.getWater() != null) {
+            output.set("water", cell.getWater().toJson(MAPPER));
+        }
+        if (cell.getAir() != null) {
+            output.set("air", cell.getAir().toJson(MAPPER));
+        }
+
+        return output;
+    }
+
+    private void printMap(Cell[][] map) {
+
+    }
+
     public ArrayNode run(InputLoader inputLoader) {
         ArrayNode output = MAPPER.createArrayNode();
 
@@ -85,6 +111,7 @@ public class Processing {
         ArrayList<CommandInput> commands = inputLoader.getCommands();
 
         SimulationInput sim = sims.get(0);
+        Cell[][] territory = null;
 
         for (CommandInput command : commands) {
             ObjectNode commandNode = MAPPER.createObjectNode();
@@ -93,13 +120,25 @@ public class Processing {
             switch (command.command) {
                 case "startSimulation":
                     commandNode.put("message", "Simulation has started.");
-                    Cell[][] territory = generateMap(sim);
+                    territory = generateMap(sim);
+                    break;
+
+                case "printEnvConditions":
+                    if (territory != null) {
+                        commandNode.set("output", printEnvConditions(territory[0][0]));
+                    }
+                    break;
+
+                case "printMap":
+                    break;
+
                 case "endSimulation":
                     commandNode.put("message", "Simulation has ended.");
-                case "startPlant":
-                    commandNode.put("message", "Plant has started.");
+                    break;
+
                 default:
-                    System.out.println("Impossible");
+                    System.out.println("Unknown command: " + command.command);
+                    break;
             }
 
             commandNode.put("timestamp", command.timestamp);

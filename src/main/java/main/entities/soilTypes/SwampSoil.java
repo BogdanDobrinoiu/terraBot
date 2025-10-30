@@ -1,5 +1,7 @@
 package main.entities.soilTypes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 import main.entities.Soil;
@@ -10,8 +12,15 @@ public class SwampSoil extends Soil {
     private double waterLogging;
 
     @Override
-    public void computeSoilQuality() {
-        setSoilQuality(this.getNitrogen() * 1.1 + this.getOrganicMatter() * 2.2 + waterLogging * 5);
-        this.setSoilQuality(normalizeScore(this.getSoilQuality()));
+    public double computeSoilQuality() {
+        double soilQuality = getNitrogen() * 1.1 + getOrganicMatter() * 2.2 - waterLogging * 5;
+        return normalizeScore(soilQuality);
+    }
+
+    @Override
+    public ObjectNode toJson(ObjectMapper mapper) {
+        ObjectNode node = super.toJson(mapper);
+        node.put("waterLogging", waterLogging);
+        return node;
     }
 }

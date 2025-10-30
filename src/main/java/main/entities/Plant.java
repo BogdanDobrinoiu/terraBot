@@ -1,5 +1,7 @@
 package main.entities;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.PlantInput;
 import lombok.Getter;
 import lombok.Setter;
@@ -50,5 +52,13 @@ public class Plant extends Entities {
         p.setMass(plantInput.mass);
 
         return p;
+    }
+
+    public ObjectNode toJson(ObjectMapper mapper) {
+        ObjectNode node = mapper.createObjectNode();
+        node.put("type", type);
+        node.put("name", name);
+        node.put("mass", mass);
+        return node;
     }
 }

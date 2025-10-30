@@ -1,5 +1,7 @@
 package main.entities.soilTypes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 import main.entities.Soil;
@@ -10,8 +12,15 @@ public class GrasslandSoil extends Soil {
     private double rootDensity;
 
     @Override
-    public void computeSoilQuality() {
-        setSoilQuality(this.getNitrogen() * 1.3  + this.getOrganicMatter() * 1.5 + rootDensity * 0.8);
-        this.setSoilQuality(normalizeScore(this.getSoilQuality()));
+    public double computeSoilQuality() {
+        double soilQuality = getNitrogen() * 1.3  + getOrganicMatter() * 1.5 + rootDensity * 0.8;
+        return normalizeScore(soilQuality);
+    }
+
+    @Override
+    public ObjectNode toJson(ObjectMapper mapper) {
+        ObjectNode node = super.toJson(mapper);
+        node.put("rootDensity", rootDensity);
+        return node;
     }
 }

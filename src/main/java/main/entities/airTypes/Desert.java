@@ -1,5 +1,7 @@
 package main.entities.airTypes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 import main.entities.Air;
@@ -10,14 +12,22 @@ public class Desert extends Air {
     private double dustParticles;
 
     @Override
-    public void calculateQuality() {
-        this.setAirQuality(this.getOxygenLevel() * 2 - dustParticles * 0.2 - this.getTemperature() * 0.3);
-        this.setAirQuality(normalizeScore(this.getAirQuality()));
+    public double calculateQuality() {
+        double airQuality = getOxygenLevel() * 2 - dustParticles * 0.2 - getTemperature() * 0.3;
+        return normalizeScore(airQuality);
+
     }
 
     @Override
     public void calculateToxicityRate() {
-        double toxicityAQ = 100 * (1 - this.getAirQuality() / 65);
+        double toxicityAQ = 100 * (1 - getAirQuality() / 65);
         this.setToxicityRate(Math.round(toxicityAQ * 100.0) / 100.0);
+    }
+
+    @Override
+    public ObjectNode toJson(ObjectMapper mapper) {
+        ObjectNode node = super.toJson(mapper);
+        node.put("dustParticles", dustParticles);
+        return node;
     }
 }

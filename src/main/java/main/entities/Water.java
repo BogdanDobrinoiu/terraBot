@@ -1,5 +1,7 @@
 package main.entities;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.WaterInput;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,20 +19,11 @@ public class Water {
     private String type;
     private double mass;
 
-    public void setWater(double salinity, double pH, double purity, int turbidity, double contaminantIndex, boolean isFrozen) {
-        this.salinity = salinity;
-        this.pH = pH;
-        this.purity = purity;
-        this.turbidity = turbidity;
-        this.contaminantIndex = contaminantIndex;
-        this.isFrozen = isFrozen;
-    }
-
     public double waterQuality() {
         double purity_score = this.purity / 100;
         double pH_score = 1 - Math.abs(this.pH - 7.5) / 7.5;
         double salinity_score = 1 - (salinity / 350);
-        double turbidity_score = 1 - (turbidity / 150);
+        double turbidity_score = 1 - (1.0 * turbidity / 150);
         double contaminant_score = 1 - (contaminantIndex / 100);
         double frozen_score = isFrozen ? 0 : 1;
 
@@ -52,5 +45,19 @@ public class Water {
         w.setMass(waterInput.mass);
 
         return w;
+    }
+
+    public ObjectNode toJson(ObjectMapper mapper) {
+        ObjectNode node = mapper.createObjectNode();
+        node.put("type", type);
+        node.put("name", name);
+        node.put("mass", mass);
+        node.put("purity", purity);
+        node.put("salinity", salinity);
+        node.put("turbidity", turbidity);
+        node.put("contaminantIndex", contaminantIndex);
+        node.put("pH", pH);
+        node.put("isFrozen", isFrozen);
+        return node;
     }
 }
