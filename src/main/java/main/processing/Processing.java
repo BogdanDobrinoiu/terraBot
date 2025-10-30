@@ -85,10 +85,10 @@ public class Processing {
             output.set("soil", cell.getSoil().toJson(MAPPER));
         }
         if (cell.getPlant() != null) {
-            output.set("plant", cell.getPlant().toJson(MAPPER));
+            output.set("plants", cell.getPlant().toJson(MAPPER));
         }
         if (cell.getAnimal() != null) {
-            output.set("animal", cell.getAnimal().toJson(MAPPER));
+            output.set("animals", cell.getAnimal().toJson(MAPPER));
         }
         if (cell.getWater() != null) {
             output.set("water", cell.getWater().toJson(MAPPER));
@@ -100,8 +100,33 @@ public class Processing {
         return output;
     }
 
-    private void printMap(Cell[][] map) {
+    private ArrayNode printMap(Cell[][] map) {
+        ArrayNode output = MAPPER.createArrayNode();
 
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                Cell cell = map[j][i];
+                ObjectNode node = MAPPER.createObjectNode();
+
+                ArrayNode section =  MAPPER.createArrayNode();
+                section.add(j);
+                section.add(i);
+                node.set("section", section);
+
+                int totalObj = 0;
+                if (cell.getPlant() != null) totalObj++;
+                if (cell.getAnimal() != null) totalObj++;
+                if (cell.getWater() != null) totalObj++;
+                node.put("totalNrOfObjects", totalObj);
+
+                node.put("airQuality", cell.getAir().scoreInterpreter(cell.getAir()));
+                node.put("soilQuality", cell.getSoil().scoreInterpreter(cell.getSoil()));
+
+                output.add(node);
+            }
+        }
+
+        return output;
     }
 
     public ArrayNode run(InputLoader inputLoader) {
@@ -113,6 +138,8 @@ public class Processing {
         SimulationInput sim = sims.get(0);
         Cell[][] territory = null;
 
+        boolean simulationStartFlag = false;
+
         for (CommandInput command : commands) {
             ObjectNode commandNode = MAPPER.createObjectNode();
             commandNode.put("command", command.command);
@@ -121,18 +148,31 @@ public class Processing {
                 case "startSimulation":
                     commandNode.put("message", "Simulation has started.");
                     territory = generateMap(sim);
+                    simulationStartFlag = true;
                     break;
 
                 case "printEnvConditions":
+                    if (!simulationStartFlag) {
+                        commandNode.put("message", "ERROR: Simulation not started. Cannot perform action");
+                        break;
+                    }
                     if (territory != null) {
                         commandNode.set("output", printEnvConditions(territory[0][0]));
                     }
                     break;
 
                 case "printMap":
+                    if (!simulationStartFlag) {
+                        commandNode.put("message", "ERROR: Simulation not started. Cannot perform action");
+                        break;
+                    }
+                    if (territory != null) {
+                        commandNode.set("output", printMap(territory));
+                    }
                     break;
 
                 case "endSimulation":
+                    simulationStartFlag = false;
                     commandNode.put("message", "Simulation has ended.");
                     break;
 

@@ -80,4 +80,10 @@ public abstract class Air extends Entities {
         node.put("airQuality", airQuality);
         return node;
     }
+
+    public String scoreInterpreter(Air air) {
+        if (air.getAirQuality() > 70) return "good";
+        if (air.getAirQuality() > 40) return "moderate";
+        return "poor";
+    }
 }

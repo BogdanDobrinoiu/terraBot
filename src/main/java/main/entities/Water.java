@@ -12,7 +12,7 @@ public class Water {
     private double salinity;
     private double pH;
     private double purity;
-    private int turbidity;
+    private double turbidity;
     private double contaminantIndex;
     private boolean isFrozen;
     private String name;
@@ -23,7 +23,7 @@ public class Water {
         double purity_score = this.purity / 100;
         double pH_score = 1 - Math.abs(this.pH - 7.5) / 7.5;
         double salinity_score = 1 - (salinity / 350);
-        double turbidity_score = 1 - (1.0 * turbidity / 150);
+        double turbidity_score = 1 - (turbidity / 150);
         double contaminant_score = 1 - (contaminantIndex / 100);
         double frozen_score = isFrozen ? 0 : 1;
 

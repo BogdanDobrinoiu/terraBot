@@ -81,4 +81,10 @@ public abstract class Soil extends Entities {
         soilNode.put("soilQuality", getSoilQuality());
         return soilNode;
     }
+
+    public String scoreInterpreter(Soil soil) {
+        if (soil.getSoilQuality() > 70) return "good";
+        if (soil.getSoilQuality() >= 40) return "moderate";
+        return "poor";
+    }
 }
