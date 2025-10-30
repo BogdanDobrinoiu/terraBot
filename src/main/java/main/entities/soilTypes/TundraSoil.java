@@ -23,4 +23,9 @@ public class TundraSoil extends Soil {
         node.put("permafrostDepth", permafrostDepth);
         return node;
     }
+
+    @Override
+    public double calculateBlockProbability() {
+        return (50 - permafrostDepth) / 50 * 100;
+    }
 }

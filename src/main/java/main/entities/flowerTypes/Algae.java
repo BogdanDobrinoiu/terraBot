@@ -4,6 +4,6 @@ import main.entities.Plant;
 
 public class Algae extends Plant {
     public Algae() {
-        super(0, "young", 60);
+        super(0.5, "young", 20);
     }
 }

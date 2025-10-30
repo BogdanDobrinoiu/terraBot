@@ -23,4 +23,9 @@ public class GrasslandSoil extends Soil {
         node.put("rootDensity", rootDensity);
         return node;
     }
+
+    @Override
+    public double calculateBlockProbability() {
+        return ((50 - rootDensity) + getWaterRetention() * 0.5) / 75 * 100;
+    }
 }

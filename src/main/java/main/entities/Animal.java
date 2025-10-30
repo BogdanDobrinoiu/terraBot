@@ -17,6 +17,16 @@ public class Animal extends Entities {
     private String name;
     private double mass;
     private String type;
+    private double probability;
+    private double attackProbability;
+
+    public Animal(double probability) {
+        this.probability = probability;
+    }
+
+    public double calculateAttackProbability() {
+        return (100 - probability) / 10.0;
+    }
 
     public static Animal createAnimal(AnimalInput animalInput) {
         Animal a;
@@ -33,6 +43,7 @@ public class Animal extends Entities {
         a.setType(animalInput.type);
         a.setName(animalInput.name);
         a.setMass(animalInput.mass);
+        a.setAttackProbability(a.calculateAttackProbability());
 
         return a;
     }

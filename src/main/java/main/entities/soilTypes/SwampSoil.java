@@ -23,4 +23,9 @@ public class SwampSoil extends Soil {
         node.put("waterLogging", waterLogging);
         return node;
     }
+
+    @Override
+    public double calculateBlockProbability() {
+        return waterLogging * 10;
+    }
 }

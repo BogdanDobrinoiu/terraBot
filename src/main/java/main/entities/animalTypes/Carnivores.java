@@ -7,5 +7,7 @@ import main.entities.Animal;
 @Getter
 @Setter
 public class Carnivores extends Animal {
-
+    public Carnivores() {
+        super(30);
+    }
 }

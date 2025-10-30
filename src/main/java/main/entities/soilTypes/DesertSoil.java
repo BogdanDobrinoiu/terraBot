@@ -23,4 +23,9 @@ public class DesertSoil extends Soil {
         node.put("salinity", salinity);
         return node;
     }
+
+    @Override
+    public double calculateBlockProbability() {
+        return (100 - getWaterRetention() + salinity) / 100 * 100;
+    }
 }

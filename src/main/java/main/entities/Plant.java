@@ -16,10 +16,15 @@ public class Plant extends Entities {
     private final double mature = 0.5;
     private final double old = -0.3;
     private double oxygenLevel;
-    protected int probability;
+    protected double probability;
     private double mass;
     private String name;
     private String type;
+    private double hangProbability;
+
+    public double calculateHangProbability() {
+        return probability / 100;
+    }
 
     public Plant(double O2, String age, int  probability) {
         this.O2 = O2;
@@ -50,6 +55,7 @@ public class Plant extends Entities {
         p.setType(plantInput.type);
         p.setName(plantInput.name);
         p.setMass(plantInput.mass);
+        p.setHangProbability(p.calculateHangProbability());
 
         return p;
     }

@@ -18,8 +18,10 @@ public abstract class Soil extends Entities {
     private String name;
     private double mass;
     private String type;
+    private double blockProbability;
 
     public abstract double computeSoilQuality();
+    public abstract double calculateBlockProbability();
 
     public static Soil createSoil (SoilInput soilInput) {
         Soil s = null;
@@ -64,6 +66,7 @@ public abstract class Soil extends Entities {
             s.setSoilpH(soilInput.soilpH);
             s.setOrganicMatter(soilInput.organicMatter);
             s.setSoilQuality(s.computeSoilQuality());
+            s.setBlockProbability(s.calculateBlockProbability());
         }
 
         return s;

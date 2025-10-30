@@ -23,4 +23,9 @@ public class ForestSoil extends Soil {
         node.put("leafLitter", leafLitter);
         return node;
     }
+
+    @Override
+    public double calculateBlockProbability() {
+        return (getWaterRetention() * 0.6 + leafLitter * 0.4) / 80 * 100;
+    }
 }
